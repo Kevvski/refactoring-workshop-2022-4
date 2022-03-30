@@ -125,19 +125,6 @@ Segment Controller::calculateNewHead() const
     return newHead;
 }
 
-void Controller::removeTailSegment()
-{
-    auto tail = m_segments.back();
-
-    DisplayInd l_evt;
-    l_evt.x = tail.x;
-    l_evt.y = tail.y;
-    l_evt.value = Cell_FREE;
-    m_displayPort.send(std::make_unique<EventT<DisplayInd>>(l_evt));
-
-    m_segments.pop_back();
-}
-
 void Controller::addHeadSegment(Segment const& newHead)
 {
     m_segments.push_front(newHead);
@@ -156,7 +143,7 @@ void Controller::removeTailSegmentIfNotScored(Segment const& newHead)
         m_scorePort.send(std::make_unique<EventT<ScoreInd>>());
         m_foodPort.send(std::make_unique<EventT<FoodReq>>());
     } else {
-        removeTailSegment();
+        segments.removeTailSegment(m_displayPort);
     }
 }
 

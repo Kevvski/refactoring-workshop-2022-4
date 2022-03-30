@@ -160,6 +160,9 @@ void Controller::updateSegmentsIfSuccessfullMove(Segment const& newHead)
 
 void Controller::handleTimeoutInd()
 {
+    int xMove{ (isHorizontal(m_currentDirection) ? isPositive(m_currentDirection) ? 1 : -1 : 0) };
+    int yMove{ (isVertical(m_currentDirection) ? isPositive(m_currentDirection) ? 1 : -1 : 0) };
+
     updateSegmentsIfSuccessfullMove(calculateNewHead());
 }
 
